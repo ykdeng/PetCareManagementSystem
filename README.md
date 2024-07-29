@@ -1,1 +1,1 @@
-# PetCareManagementSystem
+PetCareManagementSystem is a Python-based project using Flask to power its backend logic, focusing on streamlining the management of pet profiles, scheduling and tracking appointments, and handling user accounts efficiently. This system aims to offer a comprehensive solution for pet care centers looking to digitalize their services, ensuring an organized and accessible platform for both the staff and the pet owners.
