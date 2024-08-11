@@ -8,18 +8,25 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///example.db")
 
+# Ensure efficient connection handling, especially for SQLite
+engine_options = {}
+if DATABASE_URL.startswith("sqlite://"):
+    engine_options = {"connect_args": {"check_same_thread": False}, "pool_pre_ping": True}
+
 engine = create_engine(
     DATABASE_URL, 
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite://") else {}
+    **engine_options
 )
 
-db_session = scoped_session(
-    sessionmaker(
-        autocommit=False, 
-        autoflush=False, 
-        bind=engine
-    )
+# Optimize session configuration
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+    expire_on_commit=False  # Keeps objects available after commit
 )
+
+db_session = scoped_session(SessionLocal)
 
 Base = declarative_base()
 Base.query = db_session.query_property()
