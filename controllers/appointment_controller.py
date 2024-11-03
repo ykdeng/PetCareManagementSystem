@@ -26,6 +26,11 @@ def delete_appointment(appointment_id):
     response = requests.delete(f"{BASE_URL}/appointments/{appointment_id}")
     return response.status_code == 204
 
+# New function to search appointments by pet name
+def search_appointments_by_pet_name(pet_name):
+    response = requests.get(f"{BASE_URL}/appointments?pet_name={pet_name}")
+    return response.json()
+
 if __name__ == "__main__":
     new_appointment_data = {
         "pet_name": "Charlie",
@@ -33,12 +38,15 @@ if __name__ == "__main__":
         "reason": "Annual Checkup"
     }
     print("Creating an appointment...", create_appointment(new_appointment_data))
-
+    
     print("Fetching list of appointments...", get_appointments())
 
     appointment_id_to_update = 1
     update_data = {"reason": "Vaccination"}
     print(f"Updating appointment {appointment_id_to_update}...", update_appointment(appointment_id_to_update, update_data))
-
+    
     appointment_id_to_delete = 1
     print(f"Deleting appointment {appointment_id_to_delete}...", delete_appointment(appointment_id_to_delete))
+    
+    pet_name_to_search = "Charlie"
+    print(f"Searching for appointments for {pet_name_to_search}...", search_appointments_by_pet_name(pet_name_to_search))
