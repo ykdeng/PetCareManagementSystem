@@ -24,11 +24,17 @@ def update_appointment(appointment_id, data):
 
 def delete_appointment(appointment_id):
     response = requests.delete(f"{BASE_URL}/appointments/{appointment_id}")
-    return response.status_code == 204
+    if response.status_code == 204:
+        return True
+    else:
+        return False
 
-# New function to search appointments by pet name
 def search_appointments_by_pet_name(pet_name):
     response = requests.get(f"{BASE_URL}/appointments?pet_name={pet_name}")
+    return response.json()
+
+def filter_appointments_by_date(appointment_date):
+    response = requests.get(f"{BASE_URL}/appointments?date={appointment_date}")
     return response.json()
 
 if __name__ == "__main__":
@@ -50,3 +56,6 @@ if __name__ == "__main__":
     
     pet_name_to_search = "Charlie"
     print(f"Searching for appointments for {pet_name_to_search}...", search_appointments_by_pet_name(pet_name_to_search))
+    
+    appointment_date_to_filter = "2023-10-05"
+    print(f"Filtering appointments by date {appointment_date_to_filter}...", filter_appointments_by_date(appointment_date_to_filter))
