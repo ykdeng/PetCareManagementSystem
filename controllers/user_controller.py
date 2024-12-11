@@ -11,7 +11,7 @@ LOGIN_ENDPOINT = '/login'
 USER_DETAILS_ENDPOINT = '/user/{user_id}'
 
 def register_user(username, password):
-    url = BASE_URL + REGISTER_ENDPOINT
+    url = f"{BASE_URL}{REGISTER_ENDPOINT}"
     payload = {'username': username, 'password': password}
     headers = {'Content-Type': 'application/json'}
 
@@ -22,7 +22,7 @@ def register_user(username, password):
         return {'error': 'Registration failed'}
 
 def login_user(username, password):
-    url = BASE_URL + LOGIN_ENDPOINT
+    url = f"{BASE_URL}{LOGIN_ENDPOINT}"
     payload = {'username': username, 'password': password}
     headers = {'Content-Type': 'application/json'}
 
